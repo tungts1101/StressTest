@@ -14,6 +14,8 @@ def run(counter, cfg):
     # client = Client(username=username, ping_counter=cfg["NUM_PING"])
     client = Client(ip="49.213.82.124", port=10105, username=username, ping_counter=cfg["NUM_PING"])
     client.run()
+    if counter % 500 == 0:
+        time.sleep(5)
 
 def signal_handler(sig, frame):
     end = time.time()
@@ -23,8 +25,9 @@ def signal_handler(sig, frame):
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
     global start, end
-
-    cfg = json.load(open("config.json"))
+    cfg_path = open("config.json")
+    cfg = json.load(cfg_path)
+    cfg_path.close()
     counter = 1000000
     start = time.time()
     jobs = [gevent.spawn(run, counter + i, cfg) for i in range(cfg["NUM_CLIENT"])]

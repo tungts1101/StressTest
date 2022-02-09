@@ -3,6 +3,7 @@ import time
 import gevent
 from connector import Connector
 from packet.cmd_factory import CmdFactory
+from gevent import monkey; monkey.patch_all()
 
 class Client():
     def __init__(self, ip='127.0.0.1', port=1102, username='', ping_counter=10):
@@ -29,5 +30,5 @@ class Client():
                 ping_counter += 1
                 gevent.sleep(7)
         except Exception as ex:
-            print(ex)
+            # print(ex)
             print("{} fails to connect".format(self.__username))
