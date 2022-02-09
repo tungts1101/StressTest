@@ -27,6 +27,7 @@ class Client():
                 self.__connector.ping()
                 if ping_counter > self.__ping_counter: return
                 ping_counter += 1
-                gevent.sleep(100)
+                gevent.sleep(7)
         except Exception as ex:
+            print(ex)
             print("{} fails to connect".format(self.__username))
